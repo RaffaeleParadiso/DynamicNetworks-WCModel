@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Constants
 C_m = 1.0  # membrane capacitance (uF/cm^2)
 g_Na = 120.0  # maximum sodium conductance (mS/cm^2)
 g_K = 36.0  # maximum potassium conductance (mS/cm^2)
@@ -10,7 +9,6 @@ E_Na = 50.0  # sodium reversal potential (mV)
 E_K = -77.0  # potassium reversal potential (mV)
 E_L = -54.387  # leak reversal potential (mV)
 
-# Time parameters
 dt = 0.01  # time step (ms)
 t = np.arange(0, 50, dt)  # time vector (ms)
 
@@ -59,19 +57,18 @@ def beta_n(v):
     return 0.125 * np.exp(-0.0125 * (v + 65.0))
 
 
-# Simulation loop
 for i in range(1, len(t)):
-    # Calculate sodium and potassium channel conductances
+    # Sodium and potassium channel conductances
     gNa = g_Na * m[i-1]**3 * h[i-1]
     gK = g_K * n[i-1]**4
     gL = g_L
 
-    # Calculate membrane currents
+    # Membrane currents
     INa = gNa * (V[i-1] - E_Na)
     IK = gK * (V[i-1] - E_K)
     IL = gL * (V[i-1] - E_L)
 
-    # Calculate total membrane current
+    # total membrane current
     if stim_start <= t[i] <= stim_end:
         I_inj = I  # applied current during stimulus
     else:
